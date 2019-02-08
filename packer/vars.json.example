@@ -1,0 +1,13 @@
+{
+  "source_image_family": "centos-7",
+  "machine_type": "n1-standard-1",
+  "zone": "us-west1-b",
+  "region": "us-west1",
+  "project_id": "stenio-project-230417",
+  "consul_zip": "binaries/consul_1.4.2_linux_amd64.zip",
+  "consul_version": "1.4.0",
+  "username": "centos",
+  "pubkey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+r....yEjXsA2OKNy+vVMg0bQKos7PHtTPD50gtr stenio@Stenios-MacBook-Pro.local",
+  "release": "stable",
+  "owner": "owner@hashicorp.com"
+}

@@ -1,0 +1,62 @@
+{
+  "variables": {
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "project_id": "{{ user `project_id` }}",
+      "machine_type": "{{ user `machine_type` }}",
+      "region": "{{ user `region` }}",
+      "zone": "{{ user `zone` }}",
+      "image_description": "Demo Centos Machine Image With Consul",
+      "image_name": "consulluster-{{timestamp}}",
+      "image_family": "consulcluster",
+      "source_image_family":"centos-7",
+      "disk_size": 16,
+      "disk_type": "pd-ssd",
+      "ssh_username": "centos",
+     
+      "metadata": {
+        "Name": "HashiStack Centos Image {{ user `release_version` }}: Consul v{{ user `consul_version` }}",
+        "System": "HashiStack",
+        "Product": "HashiStack",
+        "Consul-Version": "{{ user `consul_version` }}",
+        "OS": "Centos",
+        "OS-Version": "",
+        "Release": "{{ user `release` }}",
+        "Owner": "{{ user `owner` }}"
+      }
+    } 
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "{{ user `consul_zip` }}",
+      "destination": "/tmp/consul.zip"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'packer' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "inline": [
+           "echo {{user `pubkey`}} > /tmp/authorized_keys",
+           "sudo mv /tmp/authorized_keys /home/{{user `username`}}/.ssh/authorized_keys",
+           "sudo chown -R {{user `username`}}:{{user `username`}} /home/{{user `username`}}/.ssh/",
+           "sudo chmod 700 /home/{{user `username`}}/.ssh/",
+           "sudo chmod 600 /home/{{user `username`}}/.ssh/authorized_keys"
+            ]
+    },
+    {
+      "type": "file",
+      "source": "files",
+      "destination": "/tmp"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/setup.sh"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/cleanup.sh"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+global:
+  enabled: true
+  image: "consul:1.4.0"
+  datacenter: stenio-consul-demo
+
+server:
+  enabled: false
+client:
+  enabled: true
+  grpc: true
+  extraConfig: |
+    {
+      "retry_join": ["provider=gce tag_value=tag-consul"]
+    }
+
+dns:
+  enabled: true
+
+syncCatalog:
+  enabled: true
+connectInject:
+  enabled: true

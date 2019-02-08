@@ -1,0 +1,6 @@
+packer/binaries/*
+!packer/binaries/.gitkeep 
+terraform.tfstate**
+.terraform*
+.DS_Store
+packer/.DS_Store
